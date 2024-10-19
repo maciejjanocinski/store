@@ -1,15 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Ziemniaki</title>
+    <title>Gruszki</title>
 </head>
 <body>
 
-<h1>Oto dział w ziemniakami:</h1>
+<h1>Oto dział w gruszkami:</h1>
 
 <form action="${pageContext.request.contextPath}/add-to-basket" method="post">
-    <input type="hidden" name="item" value="ziemniak">
-    <input type="submit" value="Kup ziemniaka">
+    <input type="hidden" name="item" value="gruszka">
+    <input type="submit" value="Kup gruszkę">
 </form>
 
 <form action="homepage-servlet" method="get">

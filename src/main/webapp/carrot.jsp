@@ -12,5 +12,9 @@
     <input type="submit" value="Kup marchewke">
 </form>
 
+<form action="homepage-servlet" method="get">
+    <button type="submit">Rozmyśliłem się</button>
+</form>
+
 </body>
 </html>

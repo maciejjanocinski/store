@@ -39,4 +39,20 @@ public class BasketService {
         }
         return items;
     }
+
+    public void clearAll() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+
+            em.createQuery("DELETE FROM Basket b").executeUpdate();
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 }
