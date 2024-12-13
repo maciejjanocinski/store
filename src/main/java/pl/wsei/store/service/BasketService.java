@@ -16,9 +16,20 @@ public class BasketService {
     try {
       em.getTransaction().begin();
 
-      for (int i = 0; i < quantity; i++) {
+      Basket existingBasket = em.createQuery(
+              "SELECT b FROM Basket b WHERE b.item = :item", Basket.class)
+          .setParameter("item", item)
+          .getResultStream()
+          .findFirst()
+          .orElse(null);
+
+      if (existingBasket != null) {
+        existingBasket.setQuantity(existingBasket.getQuantity() + quantity);
+        em.merge(existingBasket);
+      } else {
         Basket basket = new Basket();
         basket.setItem(item);
+        basket.setQuantity(quantity);
         em.persist(basket);
       }
 
