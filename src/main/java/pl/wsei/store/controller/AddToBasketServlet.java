@@ -15,11 +15,12 @@ public class AddToBasketServlet extends HttpServlet {
     private final BasketService basketService = new BasketService();
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         String item = request.getParameter("item");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
 
         try {
-            basketService.buyItem(item);
+            basketService.buyItem(item, quantity);
             response.sendRedirect(request.getContextPath() + "/basket-servlet");
         } catch (Exception e) {
             throw new ServletException("Error processing request", e);
