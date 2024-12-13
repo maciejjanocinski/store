@@ -73,4 +73,37 @@ public class BasketService {
       em.close();
     }
   }
+
+  public void sellItem(String item, int quantity) {
+    EntityManager em = emf.createEntityManager();
+    try {
+      em.getTransaction().begin();
+
+      Basket existingBasket = em.createQuery(
+              "SELECT b FROM Basket b WHERE b.item = :item", Basket.class)
+          .setParameter("item", item)
+          .getResultStream()
+          .findFirst()
+          .orElse(null);
+
+      if (existingBasket != null) {
+        int newQuantity = existingBasket.getQuantity() - quantity;
+        if (newQuantity > 0) {
+          existingBasket.setQuantity(newQuantity);
+          em.merge(existingBasket);
+        } else {
+          em.remove(existingBasket);
+        }
+      }
+
+      em.getTransaction().commit();
+    }
+    catch (Exception e) {
+      em.getTransaction().rollback();
+      throw e;
+    }
+    finally {
+      em.close();
+    }
+  }
 }
